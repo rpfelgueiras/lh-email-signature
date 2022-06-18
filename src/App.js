@@ -30,9 +30,9 @@ export default function App() {
     }
   };
 
-  const removeSelectedImage = () => {
-    setSelectedImage();
-  };
+  // const removeSelectedImage = () => {
+  //   setSelectedImage();
+  // };
 
   return (
     <>
