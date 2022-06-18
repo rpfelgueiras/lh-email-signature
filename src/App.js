@@ -6,6 +6,7 @@ export default function App() {
   const [jobTitle, setJobTitle] = useState("Head of Laserhub");
   const [phoneNumber, setPhoneNumber] = useState("+49 (0)711 89989-371");
   const [email, setEmail] = useState("youremail@laserhub.com");
+  const [selectedImage, setSelectedImage] = useState();
 
   function onChangeName(event) {
     setName(event.target.value);
@@ -22,6 +23,16 @@ export default function App() {
   function onChangeEmail(event) {
     setEmail(event.target.value);
   }
+
+  const onImageChange = (e) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setSelectedImage(e.target.files[0]);
+    }
+  };
+
+  const removeSelectedImage = () => {
+    setSelectedImage();
+  };
 
   return (
     <>
@@ -88,7 +99,7 @@ export default function App() {
                     onChange={onChangePhoneNumber}
                   />
                 </div>
-                <div className="relative border border-gray-300 rounded-md rounded-b rounded-t-none px-3 py-2 focus-within:z-10 focus-within:ring-1 focus-within:ring-indigo-600 focus-within:border-indigo-600">
+                <div className="relative border border-gray-300 rounded-md rounded-t-none rounded-b-none px-3 py-2 focus-within:z-10 focus-within:ring-1 focus-within:ring-indigo-600 focus-within:border-indigo-600">
                   <label
                     htmlFor="email"
                     className="block text-xs font-medium text-gray-900"
@@ -105,6 +116,26 @@ export default function App() {
                     onChange={onChangeEmail}
                   />
                 </div>
+                <div className="relative border border-gray-300 rounded-md rounded-b rounded-t-none px-3 py-2 focus-within:z-10 focus-within:ring-1 focus-within:ring-indigo-600 focus-within:border-indigo-600">
+                  <label
+                    htmlFor="photo"
+                    className="block text-xs font-medium text-gray-900"
+                  >
+                    Photo
+                  </label>
+                  <input accept="image/*" type="file" onChange={onImageChange} />
+                </div>
+                {/* {selectedImage && (
+                  <div>
+                    <img
+                      src={URL.createObjectURL(selectedImage)}
+                      alt="thumbnail"
+                    />
+                    <button onClick={removeSelectedImage}>
+                      Remove This Image
+                    </button>
+                  </div>
+                )} */}
               </div>
             </div>
           </div>
@@ -178,7 +209,40 @@ export default function App() {
                                       marginLeft: "0",
                                     }}
                                   >
-                                    <img
+                                    {selectedImage && (
+                                      <div>
+                                        <img
+                                          src={URL.createObjectURL(
+                                            selectedImage
+                                          )}
+                                          alt="thumbnail"
+                                          style={{
+                                            borderRadius: "100%",
+                                            maxWidth: "80px",
+                                            marginTop: "5px",
+                                          }}
+                                        />
+                                      </div>
+                                    )}
+
+                                    {!selectedImage && (
+                                      <div>
+                                        <svg
+                                          className="h-full w-full text-gray-300"
+                                          fill="currentColor"
+                                          viewBox="0 0 24 24"
+                                          style={{
+                                            borderRadius: "100%",
+                                            maxWidth: "80px",
+                                            marginTop: "5px",
+                                          }}
+                                        >
+                                          <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
+                                        </svg>
+                                      </div>
+                                    )}
+
+                                    {/* <img
                                       src="https://laserhub.com/images/email/rui-felgueiras.jpg"
                                       style={{
                                         borderRadius: "100%",
@@ -186,7 +250,7 @@ export default function App() {
                                         marginTop: "5px",
                                       }}
                                       alt="aa"
-                                    />
+                                    /> */}
                                   </div>
                                 </td>
                                 <td style={{ paddingTop: "4px" }}>
@@ -201,7 +265,10 @@ export default function App() {
                                   >
                                     {name}
                                   </span>
-                                  <span style={{ paddingLeft: "5px" }} data-testid="label-jobTitle">
+                                  <span
+                                    style={{ paddingLeft: "5px" }}
+                                    data-testid="label-jobTitle"
+                                  >
                                     {jobTitle}
                                   </span>
                                   <table
@@ -225,7 +292,9 @@ export default function App() {
                                             alt="aa"
                                           />
                                         </td>
-                                        <td data-testid="label-phoneNumber">{phoneNumber}</td>
+                                        <td data-testid="label-phoneNumber">
+                                          {phoneNumber}
+                                        </td>
                                       </tr>
                                       <tr>
                                         <td style={{ paddingRight: "10px" }}>
