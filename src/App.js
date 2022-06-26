@@ -1,11 +1,13 @@
 import "./App.css";
 import { useState } from "react";
+import { MailIcon } from "@heroicons/react/solid";
 
 export default function App() {
   const [name, setName] = useState("John Doe");
   const [jobTitle, setJobTitle] = useState("Head of Laserhub");
   const [phoneNumber, setPhoneNumber] = useState("+49 (0)711 89989-371");
   const [email, setEmail] = useState("youremail@laserhub.com");
+  const [selectedImageUrl, setSelectedImageUrl] = useState();
   const [selectedImage, setSelectedImage] = useState();
 
   function onChangeName(event) {
@@ -24,15 +26,35 @@ export default function App() {
     setEmail(event.target.value);
   }
 
-  const onImageChange = (e) => {
-    if (e.target.files && e.target.files.length > 0) {
-      setSelectedImage(e.target.files[0]);
-    }
-  };
+  const regexGDriveImageURL = new RegExp(/(\/[\w+-]+)/g);
+
+  function onChangePhotoURL(event) {
+    // Input: https://drive.google.com/file/d/1P-CVlDsTmuj_ohExbqzoRct0YgV6khww/view
+    // Output: https://drive.google.com/uc?export=view&id=1P-CVlDsTmuj_ohExbqzoRct0YgV6khww
+
+    var arrayOfUrlSlugs = event.target.value.match(regexGDriveImageURL);
+    console.log(arrayOfUrlSlugs[3].replace("/", ""));
+
+    setSelectedImageUrl(
+      "https://drive.google.com/uc?export=view&id=" +
+        arrayOfUrlSlugs[3].replace("/", "")
+    );
+    // setSelectedImageUrl(event.target.value);
+  }
+
+  // const onImageChange = (e) => {
+  //   if (e.target.files && e.target.files.length > 0) {
+  //     setSelectedImage(e.target.files[0]);
+  //   }
+  // };
 
   // const removeSelectedImage = () => {
   //   setSelectedImage();
   // };
+
+  const onclickTest = (e) => {
+    // ReactDOM.findDOMNode(<instance-of-outermost-component>).getElementsByClassName('snap') // Returns the elements
+  };
 
   return (
     <>
@@ -121,15 +143,31 @@ export default function App() {
                     htmlFor="photo"
                     className="block text-xs font-medium text-gray-900"
                   >
+                    GDrive Photo URL
+                  </label>
+                  <input
+                    type="text"
+                    name="photourl"
+                    id="photourl"
+                    data-testid="photourl"
+                    className="block w-full border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm"
+                    placeholder="https://drive.google.com/"
+                    onChange={onChangePhotoURL}
+                  />
+                </div>
+                {/* <div className="relative border border-gray-300 rounded-md rounded-b rounded-t-none px-3 py-2 focus-within:z-10 focus-within:ring-1 focus-within:ring-indigo-600 focus-within:border-indigo-600">
+                  <label
+                    htmlFor="photo"
+                    className="block text-xs font-medium text-gray-900"
+                  >
                     Photo
                   </label>
-                  {/* <input accept="image/*" type="file" onChange={onImageChange} /> */}
                   <input
                     type="file"
                     className="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100"
                     onChange={onImageChange}
                   />
-                </div>
+                </div> */}
                 {/* {selectedImage && (
                   <div>
                     <img
@@ -214,12 +252,10 @@ export default function App() {
                                       marginLeft: "0",
                                     }}
                                   >
-                                    {selectedImage && (
+                                    {selectedImageUrl && (
                                       <div>
                                         <img
-                                          src={URL.createObjectURL(
-                                            selectedImage
-                                          )}
+                                          src={selectedImageUrl}
                                           alt="thumbnail"
                                           style={{
                                             borderRadius: "100%",
@@ -230,7 +266,7 @@ export default function App() {
                                       </div>
                                     )}
 
-                                    {!selectedImage && (
+                                    {!selectedImageUrl && (
                                       <div>
                                         <svg
                                           className="h-full w-full text-gray-300"
@@ -244,18 +280,17 @@ export default function App() {
                                         >
                                           <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
                                         </svg>
+                                        {/* <img
+                                          src="https://drive.google.com/uc?export=view&id=1P-CVlDsTmuj_ohExbqzoRct0YgV6khww"
+                                          alt="thumbnail"
+                                          style={{
+                                            borderRadius: "100%",
+                                            maxWidth: "80px",
+                                            marginTop: "5px",
+                                          }}
+                                        /> */}
                                       </div>
                                     )}
-
-                                    {/* <img
-                                      src="https://laserhub.com/images/email/rui-felgueiras.jpg"
-                                      style={{
-                                        borderRadius: "100%",
-                                        maxWidth: "80px",
-                                        marginTop: "5px",
-                                      }}
-                                      alt="aa"
-                                    /> */}
                                   </div>
                                 </td>
                                 <td style={{ paddingTop: "4px" }}>
@@ -311,7 +346,7 @@ export default function App() {
                                         </td>
                                         <td>
                                           <a
-                                            href="mailto:r.felgueiras@laserhub.com"
+                                            href={`mailto:${email}`}
                                             style={{
                                               color: "#000",
                                               textDecoration: "none",
@@ -365,6 +400,19 @@ export default function App() {
                       </tr>
                     </tbody>
                   </table>
+                </div>
+                <div className="justify-center flex pt-4">
+                  <button
+                    type="button"
+                    className="inline-flex items-center px-6 py-3 border border-transparent shadow-sm text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    onClick={onclickTest}
+                  >
+                    Copy signature
+                    <MailIcon
+                      className="ml-3 -mr-1 h-5 w-5"
+                      aria-hidden="true"
+                    />
+                  </button>
                 </div>
               </div>
             </div>
