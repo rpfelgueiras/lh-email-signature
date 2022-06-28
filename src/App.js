@@ -27,18 +27,45 @@ export default function App() {
 
   const regexGDriveImageURL = new RegExp(/(\/[\w+-]+)/g);
 
+  // Input: https://drive.google.com/file/d/1P-CVlDsTmuj_ohExbqzoRct0YgV6khww/view
+  // Output: https://drive.google.com/uc?export=view&id=1P-CVlDsTmuj_ohExbqzoRct0YgV6khww
+  function getGDriveUrlToViewPhoto(gdriveurl) {
+    // Undefined
+    if (!gdriveurl) {
+      return "";
+    }
+
+    // Invalid URL - not GDrive
+    if (gdriveurl.indexOf("https://drive.google.com") < 0) {
+      return "";
+    }
+
+    var arrayOfUrlSlugs = gdriveurl.match(regexGDriveImageURL);
+
+    // Invalid URL
+    if (!arrayOfUrlSlugs) {
+      return "";
+    }
+
+    // No suficient number of slugs
+    if (arrayOfUrlSlugs.length < 4) {
+      return "";
+    }
+
+    return (
+      "https://drive.google.com/uc?export=view&id=" +
+      arrayOfUrlSlugs[3].replace("/", "")
+    );
+  }
 
   function onChangePhotoURL(event) {
-    // Input: https://drive.google.com/file/d/1P-CVlDsTmuj_ohExbqzoRct0YgV6khww/view
-    // Output: https://drive.google.com/uc?export=view&id=1P-CVlDsTmuj_ohExbqzoRct0YgV6khww
-
-    var arrayOfUrlSlugs = event.target.value.match(regexGDriveImageURL);
-    console.log(arrayOfUrlSlugs[3].replace("/", ""));
-
-    setSelectedImageUrl(
-      "https://drive.google.com/uc?export=view&id=" +
-        arrayOfUrlSlugs[3].replace("/", "")
-    );
+    var urlToViewTheGDriveImage = getGDriveUrlToViewPhoto(event.target.value);
+    if (urlToViewTheGDriveImage) {
+      setSelectedImageUrl(urlToViewTheGDriveImage);
+    } else {
+      // error
+      setSelectedImageUrl();
+    }
   }
 
   function onclickTest(event) {
@@ -251,6 +278,7 @@ export default function App() {
                                             maxWidth: "80px",
                                             marginTop: "5px",
                                           }}
+                                          data-testid="photo"
                                         />
                                       </div>
                                     )}
@@ -266,18 +294,10 @@ export default function App() {
                                             maxWidth: "80px",
                                             marginTop: "5px",
                                           }}
+                                          data-testid="photo-default"
                                         >
                                           <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
                                         </svg>
-                                        {/* <img
-                                          src="https://drive.google.com/uc?export=view&id=1P-CVlDsTmuj_ohExbqzoRct0YgV6khww"
-                                          alt="thumbnail"
-                                          style={{
-                                            borderRadius: "100%",
-                                            maxWidth: "80px",
-                                            marginTop: "5px",
-                                          }}
-                                        /> */}
                                       </div>
                                     )}
                                   </div>

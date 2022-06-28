@@ -7,6 +7,7 @@ const setup = () => {
   const inputJobTitle = screen.getByTestId("job-title");
   const inputPhoneNumber = screen.getByTestId("phone-number");
   const inputEmail = screen.getByTestId("email");
+  const inputPhotoUrl = screen.getByTestId("photourl");
 
   const labelName = screen.getByTestId("label-name");
   const labelJobTitle = screen.getByTestId("label-jobTitle");
@@ -18,10 +19,12 @@ const setup = () => {
     inputJobTitle,
     inputPhoneNumber,
     inputEmail,
+    inputPhotoUrl,
     labelName,
     labelJobTitle,
     labelPhoneNumber,
     labelEmail,
+
     ...utils,
   };
 };
@@ -65,4 +68,66 @@ test("It should change label email", () => {
   fireEvent.change(inputEmail, { target: { value: "email@laserhub.com" } });
 
   expect(inputEmail.value).toBe(labelEmail.textContent);
+});
+
+test("Invalid URL - It should not change the default avatar", () => {
+  const { inputPhotoUrl } = setup();
+
+  fireEvent.change(inputPhotoUrl, { target: { value: "1" } });
+
+  var photoDefault = screen.getByTestId("photo-default");
+
+  expect(photoDefault).toBeInTheDocument();
+});
+
+test("Incomplete URL - It should not change the default avatar", () => {
+  const { inputPhotoUrl } = setup();
+
+  fireEvent.change(inputPhotoUrl, {
+    target: { value: "https://drive.google.com/file/d/" },
+  });
+
+  var photoDefault = screen.getByTestId("photo-default");
+
+  expect(photoDefault).toBeInTheDocument();
+});
+
+test("Empty URL - It should not change the default avatar", () => {
+  const { inputPhotoUrl } = setup();
+
+  fireEvent.change(inputPhotoUrl, { target: { value: "" } });
+
+  var photoDefault = screen.getByTestId("photo-default");
+
+  expect(photoDefault).toBeInTheDocument();
+});
+
+test("No GDrive URL - It should not change the default avatar", () => {
+  const { inputPhotoUrl } = setup();
+
+  fireEvent.change(inputPhotoUrl, {
+    target: { value: "https://google.com/file/" },
+  });
+
+  var photoDefault = screen.getByTestId("photo-default");
+
+  expect(photoDefault).toBeInTheDocument();
+});
+
+test("It should change to the GDrive View URL", () => {
+  const { inputPhotoUrl } = setup();
+
+  fireEvent.change(inputPhotoUrl, {
+    target: {
+      value:
+        "https://drive.google.com/file/d/1P-CVlDsTmuj_ohExbqzoRct0YgV6khww/view",
+    },
+  });
+
+  var photo = screen.getByTestId("photo");
+
+  expect(photo).toHaveAttribute(
+    "src",
+    "https://drive.google.com/uc?export=view&id=1P-CVlDsTmuj_ohExbqzoRct0YgV6khww"
+  );
 });
