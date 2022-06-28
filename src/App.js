@@ -8,7 +8,6 @@ export default function App() {
   const [phoneNumber, setPhoneNumber] = useState("+49 (0)711 89989-371");
   const [email, setEmail] = useState("youremail@laserhub.com");
   const [selectedImageUrl, setSelectedImageUrl] = useState();
-  const [selectedImage, setSelectedImage] = useState();
 
   function onChangeName(event) {
     setName(event.target.value);
@@ -28,6 +27,7 @@ export default function App() {
 
   const regexGDriveImageURL = new RegExp(/(\/[\w+-]+)/g);
 
+
   function onChangePhotoURL(event) {
     // Input: https://drive.google.com/file/d/1P-CVlDsTmuj_ohExbqzoRct0YgV6khww/view
     // Output: https://drive.google.com/uc?export=view&id=1P-CVlDsTmuj_ohExbqzoRct0YgV6khww
@@ -39,22 +39,11 @@ export default function App() {
       "https://drive.google.com/uc?export=view&id=" +
         arrayOfUrlSlugs[3].replace("/", "")
     );
-    // setSelectedImageUrl(event.target.value);
   }
 
-  // const onImageChange = (e) => {
-  //   if (e.target.files && e.target.files.length > 0) {
-  //     setSelectedImage(e.target.files[0]);
-  //   }
-  // };
-
-  // const removeSelectedImage = () => {
-  //   setSelectedImage();
-  // };
-
-  const onclickTest = (e) => {
-    // ReactDOM.findDOMNode(<instance-of-outermost-component>).getElementsByClassName('snap') // Returns the elements
-  };
+  function onclickTest(event) {
+    // setEmail(event.target.value);
+  }
 
   return (
     <>
