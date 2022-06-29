@@ -1,6 +1,6 @@
 import "./App.css";
 import { useState } from "react";
-import { MailIcon } from "@heroicons/react/solid";
+import { MailIcon, ExclamationCircleIcon } from "@heroicons/react/solid";
 
 export default function App() {
   const [name, setName] = useState("John Doe");
@@ -8,6 +8,7 @@ export default function App() {
   const [phoneNumber, setPhoneNumber] = useState("+49 (0)711 89989-371");
   const [email, setEmail] = useState("youremail@laserhub.com");
   const [selectedImageUrl, setSelectedImageUrl] = useState();
+  const [imageURLErrorMessage, setimageURLErrorMessage] = useState("");
 
   function onChangeName(event) {
     setName(event.target.value);
@@ -62,9 +63,11 @@ export default function App() {
     var urlToViewTheGDriveImage = getGDriveUrlToViewPhoto(event.target.value);
     if (urlToViewTheGDriveImage) {
       setSelectedImageUrl(urlToViewTheGDriveImage);
+      setimageURLErrorMessage("");
     } else {
       // error
       setSelectedImageUrl();
+      setimageURLErrorMessage("error");
     }
   }
 
@@ -170,6 +173,18 @@ export default function App() {
                     placeholder="https://drive.google.com/"
                     onChange={onChangePhotoURL}
                   />
+                  {imageURLErrorMessage && (
+                    <div>
+                      <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none"></div>
+                      <ExclamationCircleIcon
+                        className="h-5 w-5 text-red-500"
+                        aria-hidden="true"
+                      />
+                      <p className="mt-2 text-sm text-red-600" id="error">
+                        Invalid GDrive URL
+                      </p>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
