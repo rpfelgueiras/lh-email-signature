@@ -171,30 +171,6 @@ export default function App() {
                     onChange={onChangePhotoURL}
                   />
                 </div>
-                {/* <div className="relative border border-gray-300 rounded-md rounded-b rounded-t-none px-3 py-2 focus-within:z-10 focus-within:ring-1 focus-within:ring-indigo-600 focus-within:border-indigo-600">
-                  <label
-                    htmlFor="photo"
-                    className="block text-xs font-medium text-gray-900"
-                  >
-                    Photo
-                  </label>
-                  <input
-                    type="file"
-                    className="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100"
-                    onChange={onImageChange}
-                  />
-                </div> */}
-                {/* {selectedImage && (
-                  <div>
-                    <img
-                      src={URL.createObjectURL(selectedImage)}
-                      alt="thumbnail"
-                    />
-                    <button onClick={removeSelectedImage}>
-                      Remove This Image
-                    </button>
-                  </div>
-                )} */}
               </div>
             </div>
           </div>
