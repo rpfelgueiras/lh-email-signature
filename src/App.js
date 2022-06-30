@@ -416,7 +416,7 @@ export default function App() {
                     </tbody>
                   </table>
                 </div>
-                <div className="justify-center flex pt-4">
+                {/* <div className="justify-center flex pt-4">
                   <button
                     type="button"
                     className="inline-flex items-center px-6 py-3 border border-transparent shadow-sm text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
@@ -428,7 +428,7 @@ export default function App() {
                       aria-hidden="true"
                     />
                   </button>
-                </div>
+                </div> */}
               </div>
             </div>
           </main>
