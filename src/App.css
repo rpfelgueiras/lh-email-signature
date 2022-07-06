@@ -5,6 +5,7 @@
 
 .preview_body {
   width: 560px;
+  height: 475px;
   display: flex;
   padding: 60px 30px;
   margin: 0 auto;

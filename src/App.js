@@ -13,10 +13,16 @@ export default function App() {
   const [jobTitle, setJobTitle] = useState("Head of Laserhub");
   const [phoneNumber, setPhoneNumber] = useState("+49 (0)711 89989-371");
   const [email, setEmail] = useState("youremail@laserhub.com");
+
   const [selectedImageUrl, setSelectedImageUrl] = useState();
   const [imageURLErrorMessage, setimageURLErrorMessage] = useState("");
   const [showItemCopiedToClipboard, setShowItemCopiedToClipboard] =
     useState(false);
+
+  const [useMarketingImageUrl, setUseMarketingImageUrl] = useState(false);
+  const [selectedMarketingImageUrl, setSelectedMarketingImageUrl] = useState(
+    "https://laserhub.com/images/email/Messen-2022-1.png"
+  );
 
   const divRef = React.useRef();
 
@@ -81,8 +87,23 @@ export default function App() {
     }
   }
 
+  function onChangeCheckBoxMarketingImageUrl(event) {
+    setUseMarketingImageUrl(event.target.checked);
+
+    if (event.target.checked) {
+      setSelectedMarketingImageUrl(
+        "https://laserhub.com/images/email/Messen-2022-1.png"
+      );
+    } else {
+      // hide
+    }
+  }
+
+  function onChangeMarketingImageUrl(event) {
+    setSelectedMarketingImageUrl(event.target.value);
+  }
+
   function onclickTest(event) {
-    // console.log(divRef.current.innerHTML);
     navigator.clipboard.writeText(divRef.current.innerHTML);
     setShowItemCopiedToClipboard(true);
   }
@@ -169,7 +190,7 @@ export default function App() {
                     onChange={onChangeEmail}
                   />
                 </div>
-                <div className="relative border border-gray-300 rounded-md rounded-b rounded-t-none px-3 py-2 focus-within:z-10 focus-within:ring-1 focus-within:ring-indigo-600 focus-within:border-indigo-600">
+                <div className="relative border border-gray-300 rounded-md rounded-t-none rounded-b-none px-3 py-2 focus-within:z-10 focus-within:ring-1 focus-within:ring-indigo-600 focus-within:border-indigo-600">
                   <label
                     htmlFor="photo"
                     className="block text-xs font-medium text-gray-900"
@@ -197,6 +218,31 @@ export default function App() {
                       </p>
                     </div>
                   )}
+                </div>
+                <div className="relative border border-gray-300 rounded-md rounded-b rounded-t-none px-3 py-2 focus-within:z-10 focus-within:ring-1 focus-within:ring-indigo-600 focus-within:border-indigo-600">
+                  <input
+                    class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                    type="checkbox"
+                    value=""
+                    id="flexCheckDefault"
+                    onChange={onChangeCheckBoxMarketingImageUrl}
+                  />
+                  <label
+                    class="form-check-label text-xs inline-block text-gray-800"
+                    for="flexCheckDefault"
+                  >
+                    Hubspot Image
+                  </label>
+                  <input
+                    type="text"
+                    name="marketingphotourl"
+                    id="marketingphotourl"
+                    data-testid="marketingphotourl"
+                    className="block w-full border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm"
+                    placeholder="https://laserhub.com/images/email/Messen-2022-1.png"
+                    onChange={onChangeMarketingImageUrl}
+                    disabled={!useMarketingImageUrl}
+                  />
                 </div>
               </div>
             </div>
@@ -391,6 +437,19 @@ export default function App() {
                             }}
                           >
                             <tbody>
+                              {useMarketingImageUrl && (
+                                <tr>
+                                  <td
+                                    colspan="2"
+                                    style={{ paddingTop: "10px" }}
+                                  >
+                                    <img
+                                      src={selectedMarketingImageUrl}
+                                      alt=""
+                                    />
+                                  </td>
+                                </tr>
+                              )}
                               <tr>
                                 <td>
                                   Laserhub GmbH | Neckarstra&szlig;e 189-191 |
@@ -416,19 +475,19 @@ export default function App() {
                     </tbody>
                   </table>
                 </div>
-                {/* <div className="justify-center flex pt-4">
+                <div className="justify-center flex pt-4">
                   <button
                     type="button"
                     className="inline-flex items-center px-6 py-3 border border-transparent shadow-sm text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     onClick={onclickTest}
                   >
-                    Copy signature
+                    Copy HTML
                     <MailIcon
                       className="ml-3 -mr-1 h-5 w-5"
                       aria-hidden="true"
                     />
                   </button>
-                </div> */}
+                </div>
               </div>
             </div>
           </main>
