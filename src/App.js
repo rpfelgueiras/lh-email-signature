@@ -441,7 +441,7 @@ export default function App() {
                                 <tr>
                                   <td
                                     colspan="2"
-                                    style={{ paddingTop: "10px" }}
+                                    style={{ paddingBottom: "10px" }}
                                   >
                                     <img
                                       src={selectedMarketingImageUrl}
