@@ -104,13 +104,13 @@ export default function App() {
   }
 
   function onclickTest(event) {
-    // navigator.clipboard.writeText(divRef.current.innerHTML);
-    // setShowItemCopiedToClipboard(true);
+    navigator.clipboard.writeText(divRef.current.innerHTML);
+    setShowItemCopiedToClipboard(true);
 
-    var range = document.createRange();
-    range.selectNode(document.getElementById("2222"));
-    window.getSelection().removeAllRanges();
-    window.getSelection().addRange(range);
+    // var range = document.createRange();
+    // range.selectNode(document.getElementById("2222"));
+    // window.getSelection().removeAllRanges();
+    // window.getSelection().addRange(range);
   }
 
   return (
