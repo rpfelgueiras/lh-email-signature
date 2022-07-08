@@ -104,8 +104,13 @@ export default function App() {
   }
 
   function onclickTest(event) {
-    navigator.clipboard.writeText(divRef.current.innerHTML);
-    setShowItemCopiedToClipboard(true);
+    // navigator.clipboard.writeText(divRef.current.innerHTML);
+    // setShowItemCopiedToClipboard(true);
+
+    var range = document.createRange();
+    range.selectNode(document.getElementById("2222"));
+    window.getSelection().removeAllRanges();
+    window.getSelection().addRange(range);
   }
 
   return (
@@ -231,7 +236,7 @@ export default function App() {
                     class="form-check-label text-xs inline-block text-gray-800"
                     for="flexCheckDefault"
                   >
-                    Hubspot Image
+                    Marketing Image
                   </label>
                   <input
                     type="text"
@@ -262,6 +267,7 @@ export default function App() {
                   className="preview_body border-x border-y border-gray-300 bg-white rounded-b h-80"
                 >
                   <table
+                    id="2222"
                     cellPadding="0"
                     width="100%"
                     cellSpacing="0"
