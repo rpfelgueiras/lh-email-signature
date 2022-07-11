@@ -1,12 +1,13 @@
 import "./App.css";
-import { useState, Fragment } from "react";
-import { MailIcon, ExclamationCircleIcon } from "@heroicons/react/solid";
-
 import React from "react";
-
+import { useState, Fragment } from "react";
+import {
+  MailIcon,
+  ExclamationCircleIcon,
+  CheckCircleIcon,
+  XIcon,
+} from "@heroicons/react/solid";
 import { Transition } from "@headlessui/react";
-import { CheckCircleIcon } from "@heroicons/react/outline";
-import { XIcon } from "@heroicons/react/solid";
 
 export default function App() {
   const [name, setName] = useState("John Doe");
@@ -103,14 +104,20 @@ export default function App() {
     setSelectedMarketingImageUrl(event.target.value);
   }
 
-  function onclickTest(event) {
+  function onClickCopyHtml(event) {
     navigator.clipboard.writeText(divRef.current.innerHTML);
     setShowItemCopiedToClipboard(true);
+  }
 
-    // var range = document.createRange();
-    // range.selectNode(document.getElementById("2222"));
-    // window.getSelection().removeAllRanges();
-    // window.getSelection().addRange(range);
+  function onClickDownloadAsHtmlFile() {
+    const element = document.createElement("a");
+    const file = new Blob([divRef.current.innerHTML], {
+      type: "html",
+    });
+    element.href = URL.createObjectURL(file);
+    element.download = "mySignature.html";
+    document.body.appendChild(element); // Required for this to work in FireFox
+    element.click();
   }
 
   return (
@@ -226,15 +233,15 @@ export default function App() {
                 </div>
                 <div className="relative border border-gray-300 rounded-md rounded-b rounded-t-none px-3 py-2 focus-within:z-10 focus-within:ring-1 focus-within:ring-indigo-600 focus-within:border-indigo-600">
                   <input
-                    class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                    className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                     type="checkbox"
                     value=""
                     id="flexCheckDefault"
                     onChange={onChangeCheckBoxMarketingImageUrl}
                   />
                   <label
-                    class="form-check-label text-xs inline-block text-gray-800"
-                    for="flexCheckDefault"
+                    className="form-check-label text-xs inline-block text-gray-800"
+                    htmlFor="flexCheckDefault"
                   >
                     Marketing Image
                   </label>
@@ -484,10 +491,21 @@ export default function App() {
                 <div className="justify-center flex pt-4">
                   <button
                     type="button"
-                    className="inline-flex items-center px-6 py-3 border border-transparent shadow-sm text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    onClick={onclickTest}
+                    className="mx-2 inline-flex items-center px-6 py-3 border border-transparent shadow-sm text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    onClick={onClickCopyHtml}
                   >
                     Copy HTML
+                    <MailIcon
+                      className="ml-3 -mr-1 h-5 w-5"
+                      aria-hidden="true"
+                    />
+                  </button>
+                  <button
+                    type="button"
+                    className="inline-flex items-center px-6 py-3 border border-transparent shadow-sm text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    onClick={onClickDownloadAsHtmlFile}
+                  >
+                    Download HTML File
                     <MailIcon
                       className="ml-3 -mr-1 h-5 w-5"
                       aria-hidden="true"
