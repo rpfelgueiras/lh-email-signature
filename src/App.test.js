@@ -8,13 +8,16 @@ const setup = () => {
   const inputPhoneNumber = screen.getByTestId("phone-number");
   const inputEmail = screen.getByTestId("email");
   const inputPhotoUrl = screen.getByTestId("photourl");
+  const inputFarewell = screen.getByTestId("farewell");
 
   const labelName = screen.getByTestId("label-name");
   const labelJobTitle = screen.getByTestId("label-jobTitle");
   const labelPhoneNumber = screen.getByTestId("label-phoneNumber");
   const labelEmail = screen.getByTestId("label-email");
+  const labelFarewell = screen.getByTestId("label-farewell");
 
   return {
+    inputFarewell,
     inputName,
     inputJobTitle,
     inputPhoneNumber,
@@ -24,6 +27,7 @@ const setup = () => {
     labelJobTitle,
     labelPhoneNumber,
     labelEmail,
+    labelFarewell,
 
     ...utils,
   };
@@ -36,6 +40,22 @@ test("It should be empty", () => {
   expect(inputJobTitle.value).toBe("");
   expect(inputPhoneNumber.value).toBe("");
   expect(inputEmail.value).toBe("");
+});
+
+test("It should have a default farewell", () => {
+  const { inputFarewell } = setup();
+
+  expect(inputFarewell.value).toBe(
+    "Mit freundlichen Grüßen aus Stuttgart/ Best Regards"
+  );
+});
+
+test("It should change label farewell", () => {
+  const { inputFarewell, labelFarewell } = setup();
+
+  fireEvent.change(inputFarewell, { target: { value: "rui" } });
+
+  expect(inputFarewell.value).toBe(labelFarewell.textContent);
 });
 
 test("It should change label name", () => {

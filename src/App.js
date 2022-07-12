@@ -10,6 +10,9 @@ import {
 import { Transition } from "@headlessui/react";
 
 export default function App() {
+  const [farewell, setFarewell] = useState(
+    "Mit freundlichen Grüßen aus Stuttgart/ Best Regards"
+  );
   const [name, setName] = useState("John Doe");
   const [jobTitle, setJobTitle] = useState("Head of Laserhub");
   const [phoneNumber, setPhoneNumber] = useState("+49 (0)711 89989-371");
@@ -26,6 +29,10 @@ export default function App() {
   );
 
   const divRef = React.useRef();
+
+  function onChangeFarewell(event) {
+    setFarewell(event.target.value);
+  }
 
   function onChangeName(event) {
     setName(event.target.value);
@@ -135,6 +142,26 @@ export default function App() {
             <div className="mt-5 flex-grow flex flex-col px-4 pt-5 pb-5">
               <div className="isolate -space-y-px rounded-md shadow-sm">
                 <div className="relative border border-gray-300 rounded-md rounded-b-none px-3 py-2 focus-within:z-10 focus-within:ring-1 focus-within:ring-indigo-600 focus-within:border-indigo-600">
+                  <label
+                    htmlFor="farewell"
+                    className="block text-xs font-medium text-gray-900"
+                  >
+                    Farewell
+                  </label>
+                  <input
+                    type="text"
+                    name="farewell"
+                    id="farewell"
+                    data-testid="farewell"
+                    className="block w-full border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm"
+                    placeholder="Best regards"
+                    defaultValue={
+                      "Mit freundlichen Grüßen aus Stuttgart/ Best Regards"
+                    }
+                    onChange={onChangeFarewell}
+                  />
+                </div>
+                <div className="relative border border-gray-300 rounded-md rounded-t-none rounded-b-none px-3 py-2 focus-within:z-10 focus-within:ring-1 focus-within:ring-indigo-600 focus-within:border-indigo-600">
                   <label
                     htmlFor="name"
                     className="block text-xs font-medium text-gray-900"
@@ -299,9 +326,11 @@ export default function App() {
                             <tbody>
                               <tr>
                                 <td>
-                                  <p style={{ fontSize: "14px" }}>
-                                    Mit freundlichen Gr&uuml;&szlig;en aus
-                                    Stuttgart/ Best Regards
+                                  <p
+                                    data-testid="label-farewell"
+                                    style={{ fontSize: "14px" }}
+                                  >
+                                    {farewell}
                                   </p>
                                 </td>
                               </tr>
