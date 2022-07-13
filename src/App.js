@@ -15,8 +15,10 @@ export default function App() {
   );
   const [name, setName] = useState("John Doe");
   const [jobTitle, setJobTitle] = useState("Head of Laserhub");
-  const [phoneNumber, setPhoneNumber] = useState("+49 (0)711 89989-371");
   const [email, setEmail] = useState("youremail@laserhub.com");
+
+  const [hasPhoneNumber, setHasPhoneNumber] = useState(true);
+  const [phoneNumber, setPhoneNumber] = useState("+49 (0)711 89989-371");
 
   const [selectedImageUrl, setSelectedImageUrl] = useState();
   const [imageURLErrorMessage, setimageURLErrorMessage] = useState("");
@@ -92,6 +94,15 @@ export default function App() {
       // error
       setSelectedImageUrl();
       setimageURLErrorMessage("error");
+    }
+  }
+
+  function onChangeCheckBoxPhoneNumber(event) {
+    setHasPhoneNumber(event.target.checked);
+
+    if (event.target.checked) {
+    } else {
+      // hide
     }
   }
 
@@ -196,6 +207,14 @@ export default function App() {
                   />
                 </div>
                 <div className="relative border border-gray-300 rounded-md rounded-t-none rounded-b-none px-3 py-2 focus-within:z-10 focus-within:ring-1 focus-within:ring-indigo-600 focus-within:border-indigo-600">
+                  <input
+                    className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                    type="checkbox"
+                    value=""
+                    id="checkBoxPhoneNumber"
+                    onChange={onChangeCheckBoxPhoneNumber}
+                    defaultChecked={true}
+                  />
                   <label
                     htmlFor="phone-number"
                     className="block text-xs font-medium text-gray-900"
@@ -210,6 +229,8 @@ export default function App() {
                     className="block w-full border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm"
                     placeholder="+49 (0)711 89989-371"
                     onChange={onChangePhoneNumber}
+                    disabled={!hasPhoneNumber}
+                    defaultValue={"+49 (0)711 89989-371"}
                   />
                 </div>
                 <div className="relative border border-gray-300 rounded-md rounded-t-none rounded-b-none px-3 py-2 focus-within:z-10 focus-within:ring-1 focus-within:ring-indigo-600 focus-within:border-indigo-600">
@@ -427,18 +448,20 @@ export default function App() {
                                     }}
                                   >
                                     <tbody>
-                                      <tr>
-                                        <td style={{ paddingRight: "10px" }}>
-                                          <img
-                                            width="18"
-                                            src="https://laserhub.com/images/email/tel_icon.png"
-                                            alt="aa"
-                                          />
-                                        </td>
-                                        <td data-testid="label-phoneNumber">
-                                          {phoneNumber}
-                                        </td>
-                                      </tr>
+                                      {hasPhoneNumber && (
+                                        <tr>
+                                          <td style={{ paddingRight: "10px" }}>
+                                            <img
+                                              width="18"
+                                              src="https://laserhub.com/images/email/tel_icon.png"
+                                              alt="aa"
+                                            />
+                                          </td>
+                                          <td data-testid="label-phoneNumber">
+                                            {phoneNumber}
+                                          </td>
+                                        </tr>
+                                      )}
                                       <tr>
                                         <td style={{ paddingRight: "10px" }}>
                                           <img
