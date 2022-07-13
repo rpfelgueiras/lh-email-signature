@@ -119,7 +119,13 @@ export default function App() {
   }
 
   function onChangeMarketingImageUrl(event) {
-    setSelectedMarketingImageUrl(event.target.value);
+    var urlToViewTheGDriveImage = getGDriveUrlToViewPhoto(event.target.value);
+    if (urlToViewTheGDriveImage) {
+      // If it is a GDrive file
+      setSelectedMarketingImageUrl(urlToViewTheGDriveImage);
+    } else {
+      setSelectedMarketingImageUrl(event.target.value);
+    }
   }
 
   function onClickCopyHtml(event) {
@@ -505,7 +511,7 @@ export default function App() {
                               {useMarketingImageUrl && (
                                 <tr>
                                   <td
-                                    colspan="2"
+                                    colSpan="2"
                                     style={{ paddingBottom: "10px" }}
                                   >
                                     <img
