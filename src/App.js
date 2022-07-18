@@ -536,7 +536,7 @@ export default function App() {
                               <tr>
                                 <td>
                                   Gesch&auml;ftsf&uuml;hrung: Adrian Raidt,
-                                  Christoph R&ouml;&szlig;ner, Jonas Schweizer
+                                  Christoph R&ouml;&szlig;ner
                                 </td>
                               </tr>
                             </tbody>
