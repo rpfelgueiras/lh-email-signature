@@ -38,7 +38,7 @@ test("It should be empty", () => {
 
   expect(inputName.value).toBe("");
   expect(inputJobTitle.value).toBe("");
-  expect(inputPhoneNumber.value).toBe("");
+  expect(inputPhoneNumber.value).toBe("+49 (0)711 89989-371");
   expect(inputEmail.value).toBe("");
 });
 
